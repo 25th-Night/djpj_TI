@@ -1,7 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from django.shortcuts import render
-from django.contrib.auth import authenticate, login
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, logout
+from django.urls import reverse
+from django.views import View
 from django.views.generic import FormView
 
 from .forms import LoginForm
@@ -49,3 +51,16 @@ class LoginView(FormView):
 @login_required
 def dashboard(request):
     return render(request, 'account/dashboard.html', {'section': 'dashboard'})
+
+
+def user_logout(request):
+    logout(request)
+    return render(request, 'account/logged_out.html')
+
+
+class LogoutView(View):
+
+    def get(self, request, *args, **kwargs):
+        logout(request)
+        return render(request, 'account/logged_out.html')
+
