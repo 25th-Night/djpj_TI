@@ -176,3 +176,9 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = secrets["GMAIL"]["default"]["EMAIL_HOST_USER"]
 EMAIL_HOST_PASSWORD = secrets["GMAIL"]["default"]["EMAIL_HOST_PASSWORD"]
+
+
+# login settings
+LOGIN_REDIRECT_URL = 'dashboard'
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
