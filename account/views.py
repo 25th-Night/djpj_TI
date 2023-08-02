@@ -148,33 +148,68 @@ class CustomLoginView(LoginView):
         return super().dispatch(request, *args, **kwargs)
 
 
-class ProfileEditView(LoginRequiredMixin, FormView):
+# class ProfileEditView(LoginRequiredMixin, FormView):
+#     template_name = 'account/edit.html'
+#     form_class = UserEditForm
+#     profile_form_class = ProfileEditForm
+#     success_url = reverse_lazy('edit')
+#
+#     def get_form(self, form_class=None):
+#         if form_class is None:
+#             form_class = self.get_form_class()
+#         user_form = form_class(instance=self.request.user)
+#         profile_form = self.profile_form_class(instance=self.request.user.profile)
+#         return user_form, profile_form
+#
+#     def form_valid(self, form):
+#         user_form = form
+#         profile_form = self.profile_form_class(
+#             instance=self.request.user.profile,
+#             data=self.request.POST,
+#             files=self.request.FILES
+#         )
+#
+#         if user_form.is_valid() and profile_form.is_valid():
+#             user_form.save()
+#             profile_form.save()
+#
+#             messages.success(self.request, '프로필이 성공적으로 업데이트되었습니다.')
+#         else:
+#             messages.error(self.request, '프로필 업데이트에 오류가 발생했습니다.')
+#
+#             context = self.get_context_data()
+#             return self.render_to_response(context)
+#
+#         return super().form_valid(form)
+#     def form_invalid(self, form):
+#         messages.error(self.request, 'Error updating your profile')
+#         return super().form_invalid(form)
+#
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         user_form, profile_form = self.get_form()
+#         context['user_form'] = user_form
+#         context['profile_form'] = profile_form
+#         return context
+
+
+class ProfileEditView(LoginRequiredMixin, View):
     template_name = 'account/edit.html'
-    form_class = UserEditForm
-    profile_form_class = ProfileEditForm
-    success_url = reverse_lazy('edit')
 
-    def get_form(self, form_class=None):
-        if form_class is None:
-            form_class = self.get_form_class()
-        user_form = form_class(instance=self.request.user)
-        profile_form = self.profile_form_class(instance=self.request.user.profile)
-        return user_form, profile_form
+    def get(self, request):
+        user_form = UserEditForm(instance=request.user)
+        profile_form = ProfileEditForm(instance=request.user.profile)
+        return render(request, self.template_name, {'user_form': user_form, 'profile_form': profile_form})
 
-    def form_valid(self, form):
-        user_form, profile_form = form
-        user_form.save()
-        profile_form.save()
-        messages.success(self.request, 'Profile updated successfully')
-        return super().form_valid(form)
+    def post(self, request):
+        user_form = UserEditForm(instance=request.user, data=request.POST)
+        profile_form = ProfileEditForm(instance=request.user.profile, data=request.POST, files=request.FILES)
 
-    def form_invalid(self, form):
-        messages.error(self.request, 'Error updating your profile')
-        return super().form_invalid(form)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        user_form, profile_form = self.get_form()
-        context['user_form'] = user_form
-        context['profile_form'] = profile_form
-        return context
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, '프로필이 성공적으로 업데이트되었습니다.')
+            return redirect('edit')
+        else:
+            messages.error(request, '프로필 업데이트에 오류가 발생했습니다.')
+            return render(request, self.template_name, {'user_form': user_form, 'profile_form': profile_form})
