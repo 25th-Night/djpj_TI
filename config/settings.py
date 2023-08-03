@@ -66,6 +66,7 @@ INSTALLED_APPS = [
 
     # Thrid-party Apps
     'taggit',
+    'social_django',
 
     # Custom Apps,
     'blog.apps.BlogConfig'
