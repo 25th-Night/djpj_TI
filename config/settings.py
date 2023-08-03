@@ -45,7 +45,7 @@ TEMPLATE_DIR = BASE_DIR / "templates"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'mysite.com']
+ALLOWED_HOSTS = ['mysite.com', '127.0.0.1', 'localhost']
 
 # SITE_ID 설정
 SITE_ID = 1
@@ -53,7 +53,10 @@ SITE_ID = 1
 # Application definition
 
 INSTALLED_APPS = [
+    # Custom Apps,
     'account.apps.AccountConfig',
+
+    # Local Apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -67,6 +70,7 @@ INSTALLED_APPS = [
     # Thrid-party Apps
     'taggit',
     'social_django',
+    'django_extensions',
 
     # Custom Apps,
     'blog.apps.BlogConfig'
