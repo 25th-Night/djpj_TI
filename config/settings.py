@@ -204,3 +204,9 @@ AUTHENTICATION_BACKENDS = [
     'account.authentication.EmailAuthBackend',
     'social_core.backends.facebook.FacebookOAuth2',
 ]
+
+# 페이스북 인증
+SOCIAL_AUTH_FACEBOOK_KEY = secrets["SOCIAL_AUTH_FACEBOOK_KEY"]
+SOCIAL_AUTH_FACEBOOK_SECRET = secrets["SOCIAL_AUTH_FACEBOOK_SECRET"]
+
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
