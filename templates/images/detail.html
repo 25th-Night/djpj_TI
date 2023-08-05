@@ -44,3 +44,37 @@
         </div>
     {% endwith %}
 {% endblock %}
+
+<!-- script 태그는 작성하지 않는 것이 맞으나, js 코드를 편하게 보기 위해 작성해놓음.-->
+<script>
+{% block domready %}
+    const url = '{% url "images:like" %}';
+    var options = {
+        method: 'POST',
+        headers: {'X-CSRFToken': csrftoken},
+        mode: 'same-origin',
+    }
+    document.querySelector('a.like').addEventListener('click', function (e) {
+        e.preventDefault();
+        var likeButton = this;
+        var formData = new FormData();
+        formData.append('id', likeButton.dataset.id);
+        formData.append('action', likeButton.dataset.action);
+        console.log(options);
+        options['body'] = formData;
+        fetch(url, options)
+            .then(response => response.json())
+            .then(data => {
+                if (data['status'] === 'ok') {
+                    var previousAction = likeButton.dataset.action;
+                    var action = previousAction === 'like' ? 'unlike' : 'like';
+                    likeButton.dataset.action = action;
+                    likeButton.innerHTML = action;
+                    var likeCount = document.querySelector('span.count .total');
+                    var totalLikes = parseInt(likeCount.innerHTML);
+                    likeCount.innerHTML = previousAction === 'like' ? totalLikes + 1 : totalLikes - 1;
+                }
+            })
+    });
+{% endblock domready %}
+</script>
