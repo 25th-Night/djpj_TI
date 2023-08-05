@@ -166,5 +166,5 @@ class ImageListView(LoginRequiredMixin, View):
             # If page out of range, return the last page of results
             images = paginator.page(paginator.num_pages)
         if images_only:
-            return render(request, 'images/image/list_images.html', {'section': 'images', 'images': images})
-        return render(request, 'images/image/list.html', {'section': 'images', 'images': images})
+            return render(request, 'images/list_images.html', {'section': 'images', 'images': images})
+        return render(request, 'images/list.html', {'section': 'images', 'images': images})
