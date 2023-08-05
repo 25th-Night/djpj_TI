@@ -22,25 +22,17 @@ boxHtml = `
 body.innerHTML += boxHtml;
 
 function bookmarkletLaunch() {
-		bookmarklet = document.getElementById('bookmarklet');
-		var imagesFound = bookmarklet.querySelector('.images');
-		// 이미지 목록 초기화
-		imagesFound.innerHTML = '';
-		// 북마크릿 표시
-		bookmarklet.style.display = 'block';
-		// 닫기 이벤트
-		bookmarklet.querySelector('#close').addEventListener('click', function(){
-				bookmarklet.style.display = 'none'
-		});
-}
-
-function bookmarkletLaunch() {
     bookmarklet = document.getElementById('bookmarklet');
     var imagesFound = bookmarklet.querySelector('.images');
+    // 이미지 목록 초기화
+    imagesFound.innerHTML = '';
+    // 북마크릿 표시
     bookmarklet.style.display = 'block';
+    // 닫기 이벤트
     bookmarklet.querySelector('#close').addEventListener('click', function(){
         bookmarklet.style.display = 'none'
     });
+    // 최소 크기를 갖는 DOM 내의 이미지 찾기
     images = document.querySelectorAll('img[src$=".jpg"], img[src$=".jpeg"], img[src$=".png"]');
     images.forEach(image => {
         if(image.naturalWidth >= minWidth && image.naturalHeight >= minHeight){
@@ -48,7 +40,8 @@ function bookmarkletLaunch() {
             imageFound.src = image.src;
             imagesFound.append(imageFound);
         }
-    })
+    });
+    // 이미지 선택 이벤트
     imagesFound.querySelectorAll('img').forEach(image => {
         image.addEventListener('click', function(event){
             imageSelected = event.target;
@@ -59,10 +52,8 @@ function bookmarkletLaunch() {
                 + encodeURIComponent(document.title),
                 '_blank');
         })
-    })
+    });
 }
-
-
 
 // 북마크릿 실행
 bookmarkletLaunch();
