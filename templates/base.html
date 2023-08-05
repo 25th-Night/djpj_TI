@@ -8,11 +8,11 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{% block title %}{% endblock %}</title>
-    <link href="{% static 'css/account/base.css' %}" rel="stylesheet">
+    <link href="{% static 'css/base.css' %}" rel="stylesheet">
 </head>
 <body>
     <div id="header">
-        <span class="logo">Account</span>
+        <span class="logo">Bookmarks</span>
         {% if request.user.is_authenticated %}
             <ul class="menu">
                 <li {% if section == 'dashboard' %}class="selected"{% endif %}>
