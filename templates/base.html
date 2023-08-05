@@ -52,5 +52,12 @@
             {% endfor %}
         </ul>
     {% endif %}
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            // DOM loaded
+            {% block domready %}
+            {% endblock %}
+        })
+    </script>
 </body>
 </html>
