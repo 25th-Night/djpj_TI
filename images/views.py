@@ -74,3 +74,5 @@ class ImageDetailView(TemplateView):
 
         context['section'] = 'images'
         context['image'] = image
+
+        return context
