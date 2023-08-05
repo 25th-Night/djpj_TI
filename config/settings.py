@@ -73,7 +73,7 @@ INSTALLED_APPS = [
     'django_extensions',
 
     # Custom Apps,
-    'blog.apps.BlogConfig'
+    'blog.apps.BlogConfig',
     'images.apps.ImagesConfig',
 ]
 
