@@ -1,13 +1,14 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.views.generic import FormView
+from django.views.generic import FormView, TemplateView
 
 from .forms import ImageCreateForm
+from .models import Image
 
 
 @login_required
@@ -58,3 +59,18 @@ class ImageCreateView(LoginRequiredMixin, FormView):
         context['section'] = 'images'
         return context
 
+
+def image_detail(request, id, slug):
+    image = get_object_or_404(Image, id=id, slug=slug)
+    return render(request, 'images/image/detail.html', {'section': 'images', 'image': image})
+
+
+class ImageDetailView(TemplateView):
+    template_name = "images/detail.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        image = get_object_or_404(Image, id=self.kwargs['id'], slug=self.kwargs['slug'])
+
+        context['section'] = 'images'
+        context['image'] = image
