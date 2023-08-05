@@ -56,4 +56,5 @@ class ImageCreateView(LoginRequiredMixin, FormView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['section'] = 'images'
+        return context
 
