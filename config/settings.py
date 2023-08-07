@@ -77,6 +77,7 @@ INSTALLED_APPS = [
     # Custom Apps,
     'blog.apps.BlogConfig',
     'images.apps.ImagesConfig',
+    'actions.apps.ActionsConfig',
 ]
 
 MIDDLEWARE = [
