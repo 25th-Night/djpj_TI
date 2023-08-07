@@ -17,6 +17,12 @@
             Bookmark it
         </a>
     </p>
+    <h2>What's happening</h2>
+    <div id="action-list">
+        {% for action in actions %}
+            {% include "actions/detail.html" %}
+        {% endfor %}
+    </div>
     <p>
         You can
         <a href="{% url 'edit' %}">edit your profile</a>
