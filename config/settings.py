@@ -48,6 +48,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['mysite.com', '127.0.0.1', 'localhost']
 
+# Debug_Toolbr
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
+
 # SITE_ID 설정
 SITE_ID = 1
 
@@ -73,6 +78,7 @@ INSTALLED_APPS = [
     'social_django',
     'django_extensions',
     'easy_thumbnails',
+    'debug_toolbar',
 
     # Custom Apps,
     'blog.apps.BlogConfig',
@@ -81,6 +87,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
