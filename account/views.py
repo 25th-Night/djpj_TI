@@ -4,15 +4,16 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse, reverse_lazy
 from django.views import View
+from django.views.decorators.http import require_POST
 from django.views.generic import FormView, TemplateView, ListView, DetailView
 
 from .forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditForm
-from .models import Profile
+from .models import Profile, Contact
 
 
 # def user_login(request):
@@ -288,3 +289,41 @@ class UserDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context['section'] = 'people'
         return context
+
+
+@require_POST
+@login_required
+def user_follow(request):
+    user_id = request.POST.get('id')
+    action = request.POST.get('action')
+
+    if user_id and action:
+        try:
+            user = User.objects.get(id=user_id)
+            if action == 'follow':
+                Contact.objects.get_or_create(user_from=request.user, user_to=user)
+            else:
+                Contact.objects.filter(user_from=request.user, user_to=user).delete()
+            return JsonResponse({'status': 'ok'})
+        except User.DoesNotExist:
+            return JsonResponse({'status': 'error'})
+    return JsonResponse({'status': 'error'})
+
+
+class UserFollowView(LoginRequiredMixin, View):
+
+    def post(self, request):
+        user_id = request.POST.get('id')
+        action = request.POST.get('action')
+
+        if user_id and action:
+            try:
+                user = User.objects.get(id=user_id)
+                if action == 'follow':
+                    Contact.objects.get_or_create(user_from=request.user, user_to=user)
+                else:
+                    Contact.objects.filter(user_from=request.user, user_to=user).delete()
+                return JsonResponse({'status': 'ok'})
+            except User.DoesNotExist:
+                return JsonResponse({'status': 'error'})
+        return JsonResponse({'status': 'error'})
