@@ -2,13 +2,14 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse, reverse_lazy
 from django.views import View
-from django.views.generic import FormView
+from django.views.generic import FormView, TemplateView, ListView, DetailView
 
 from .forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditForm
 from .models import Profile
@@ -213,3 +214,77 @@ class ProfileEditView(LoginRequiredMixin, View):
         else:
             messages.error(request, '프로필 업데이트에 오류가 발생했습니다.')
             return render(request, self.template_name, {'user_form': user_form, 'profile_form': profile_form})
+
+@login_required
+def user_list(request):
+    users = User.objects.filter(is_active=True)
+    return render(request,
+                  'account/user/list.html',
+                  {'section': 'people',
+                   'users': users})
+
+
+# class UserListView(LoginRequiredMixin, TemplateView):
+#     template_name = "account/user/list.html"
+#
+#     def get_context_data(self, **kwargs):
+#         context=super().get_context_data(**kwargs)
+#         users = User.objects.filter(is_active=True)
+#
+#         context['section'] = 'people'
+#         context['users'] = users
+#
+#         return context
+
+
+class UserListView(LoginRequiredMixin, ListView):
+    template_name = "account/user/list.html"
+    model = User
+    context_object_name = "users"
+
+    def get_queryset(self):
+        return User.objects.filter(is_active=True)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['section'] = 'people'
+        return context
+
+
+@login_required
+def user_detail(request, username):
+    user = get_object_or_404(User,
+                             username=username,
+                             is_active=True)
+    return render(request,
+                  'account/user/detail.html',
+                  {'section': 'people',
+                   'user': user})
+
+
+# class UserDetailView(LoginRequiredMixin, TemplateView):
+#     template_name = "account/user/detail.html"
+#
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#
+#         user = get_object_or_404(User, username=self.kwargs['username'], is_active=True)
+#
+#         context['section'] = 'people'
+#         context['user'] = user
+#
+#         return context
+
+
+class UserDetailView(LoginRequiredMixin, DetailView):
+    template_name = "account/user/detail.html"
+    model = User
+    context_object_name = "user"
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(User, username=self.kwargs['username'], is_active=True)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['section'] = 'people'
+        return context
