@@ -30,8 +30,8 @@
 {% endblock %}
 <script>
     {% block domready %}
-        var url = '{% url "user_follow" %}';
-        var options = {
+        const url = '{% url "user_follow" %}';
+        const options = {
             method: 'POST',
             headers: {'X-CSRFToken': csrftoken},
             mode: 'same-origin'
