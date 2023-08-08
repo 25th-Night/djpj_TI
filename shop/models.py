@@ -1,9 +1,14 @@
 from django.db import models
+from django.utils.text import slugify
 
 
 class Category(models.Model):
     name = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True, allow_unicode=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name, allow_unicode=True)
+        super().save(*args, **kwargs)
 
     class Meta:
         ordering = ['name']
@@ -27,6 +32,10 @@ class Product(models.Model):
     available = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name, allow_unicode=True)
+        super().save(*args, **kwargs)
 
     class Meta:
         ordering = ['name']
