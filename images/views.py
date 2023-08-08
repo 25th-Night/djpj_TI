@@ -1,3 +1,5 @@
+import redis
+from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render, get_object_or_404
@@ -12,6 +14,11 @@ from django.views.generic import FormView, TemplateView
 from actions.utils import create_action
 from .forms import ImageCreateForm
 from .models import Image
+
+
+r = redis.Redis(host=settings.REDIS_HOST,
+                port=settings.REDIS_PORT,
+                db=settings.REDIS_DB)
 
 
 @login_required
@@ -67,7 +74,12 @@ class ImageCreateView(LoginRequiredMixin, FormView):
 
 def image_detail(request, id, slug):
     image = get_object_or_404(Image, id=id, slug=slug)
-    return render(request, 'images/image/detail.html', {'section': 'images', 'image': image})
+    total_views = r.incr(f"image:{image.id}:views")
+    return render(request,
+                  'images/image/detail.html',
+                  {'section': 'images',
+                   'image': image,
+                   'total_views': total_views})
 
 
 class ImageDetailView(TemplateView):
@@ -76,9 +88,11 @@ class ImageDetailView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         image = get_object_or_404(Image, id=self.kwargs['id'], slug=self.kwargs['slug'])
+        total_views = r.incr(f"image:{image.id}:views")
 
         context['section'] = 'images'
         context['image'] = image
+        context['total_views'] = total_views
 
         return context
 
