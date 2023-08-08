@@ -3,8 +3,8 @@ from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render, get_object_or_404
-
-# Create your views here.
+from django.http import JsonResponse, HttpResponse
+from django.views.decorators.http import require_POST
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -99,10 +99,6 @@ class ImageDetailView(TemplateView):
         return context
 
 
-from django.http import JsonResponse, HttpResponse
-from django.views.decorators.http import require_POST
-
-
 @login_required
 @require_POST
 def image_like(request):
@@ -189,3 +185,28 @@ class ImageListView(LoginRequiredMixin, View):
         if images_only:
             return render(request, 'images/list_images.html', {'section': 'images', 'images': images})
         return render(request, 'images/list.html', {'section': 'images', 'images': images})
+
+
+@login_required
+def image_ranking(request):
+    image_ranking = r.zrange('image_ranking', 0, -1, desc=True)[:10]
+    image_ranking_ids = [int(id) for id in image_ranking]
+    most_viewed = list(Image.objects.filter(id__in=image_ranking_ids))
+    print(f"most_viewed 정렬 전: {most_viewed}")
+    most_viewed.sort(key=lambda x: image_ranking_ids.index(x.id))
+    print(f"most_viewed 정렬 후: {most_viewed}")
+    return render(request,
+                  'images/ranking.html',
+                  {'section': 'images',
+                   'most_viewed': most_viewed})
+
+
+class ImageRankingView(TemplateView):
+    template_name = 'images/ranking.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        image_ranking = r.zrange('image_ranking', 0, -1, desc=True)[:10]
+        image_ranking_ids = [int(id) for id in image_ranking]
+        most_viewed = list(Image.objects.filter(id__in=image_ranking_ids))
+        most_viewed.sort(key=lambda x: image_ranking_ids.index(x.id))
