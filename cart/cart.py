@@ -31,3 +31,12 @@ class Cart:
 
     def save(self):
         self.session.modified = True
+
+    def remove(self, product):
+        """
+        장바구니에서 제품을 제거합니다.
+        """
+        product_id = str(product.id)
+        if product_id in self.cart:
+            del self.cart[product_id]
+            self.save()
