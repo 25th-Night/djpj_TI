@@ -61,6 +61,10 @@ class CartRemoveView(View):
 
 def cart_detail(request):
     cart = Cart(request)
+    for item in cart:
+        item['update_quantity_form'] = CartAddProductForm(initial={
+            'quantity': item['quantity'],
+            'override': True})
     return render(request, 'cart/detail.html', {'cart': cart})
 
 
@@ -69,4 +73,9 @@ class CartDetailView(DetailView):
     context_object_name = "cart"
 
     def get_object(self):
-        return Cart(self.request)
+        cart = Cart(self.request)
+        for item in cart:
+            item['update_quantity_form'] = CartAddProductForm(initial={
+                'quantity': item['quantity'],
+                'override': True})
+        return cart
