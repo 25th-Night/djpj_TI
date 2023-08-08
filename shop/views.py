@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import TemplateView
 
+from cart.forms import CartAddProductForm
 from shop.models import Category, Product
 
 
@@ -39,7 +40,8 @@ class ProductListView(TemplateView):
 
 def product_detail(request, id, slug):
     product = get_object_or_404(Product, id=id, slug=slug, available=True)
-    return render(request, 'shop/product/detail.html', {'product': product})
+    cart_product_form = CartAddProductForm()
+    return render(request, 'shop/product/detail.html', {'product': product, 'cart_product_form': cart_product_form})
 
 
 class ProductDetailView(TemplateView):
@@ -50,7 +52,9 @@ class ProductDetailView(TemplateView):
         id = self.kwargs["id"]
         slug = self.kwargs["slug"]
         product = get_object_or_404(Product, id=id, slug=slug, available=True)
+        cart_product_form = CartAddProductForm()
 
         context["product"] = product
+        context["cart_product_form"] = cart_product_form
 
         return context
