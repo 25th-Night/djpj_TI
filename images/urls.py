@@ -13,4 +13,6 @@ urlpatterns = [
     path('like/', views.ImageLikeView.as_view(), name='like'),
     # path('', views.image_list, name='list'),
     path('', views.ImageListView.as_view(), name='list'),
+    # path('ranking/', views.image_ranking, name='ranking'),
+    path('ranking/', views.ImageRankingView.as_view(), name='ranking'),
 ]
