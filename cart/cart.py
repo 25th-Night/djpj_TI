@@ -54,3 +54,9 @@ class Cart:
             item['price'] = Decimal(item['price'])
             item['total_price'] = item['price'] * item['quantity']
             yield item
+
+    def __len__(self):
+        """
+        장바구니에 있는 모든 항목을 세어 반환합니다.
+        """
+        return sum(item['quantity'] for item in self.cart.values())
