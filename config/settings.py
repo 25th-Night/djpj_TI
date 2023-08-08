@@ -241,7 +241,12 @@ SOCIAL_AUTH_PIPELINE = [
     'social_core.pipeline.user.user_details',
 ]
 
-
+# get_absolute_url 오버라이드
 ABSOLUTE_URL_OVERRIDES = {
     'auth.user': lambda u: reverse_lazy('user_detail', args=[u.username])
 }
+
+# Redis 설정
+REDIS_HOST = 'localhost'
+REDIS_PORT = 6379
+REDIS_DB = 0
