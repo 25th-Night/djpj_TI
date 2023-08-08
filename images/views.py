@@ -210,3 +210,8 @@ class ImageRankingView(TemplateView):
         image_ranking_ids = [int(id) for id in image_ranking]
         most_viewed = list(Image.objects.filter(id__in=image_ranking_ids))
         most_viewed.sort(key=lambda x: image_ranking_ids.index(x.id))
+
+        context["section"] = "images"
+        context["most_viewed"] = most_viewed
+
+        return context
