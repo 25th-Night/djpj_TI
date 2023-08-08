@@ -252,3 +252,6 @@ ABSOLUTE_URL_OVERRIDES = {
 REDIS_HOST = 'localhost'
 REDIS_PORT = 6379
 REDIS_DB = 0
+
+# Cart Session 설정
+CART_SESSION_ID = 'cart'
