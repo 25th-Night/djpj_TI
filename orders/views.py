@@ -5,6 +5,7 @@ from cart.cart import Cart
 from orders.forms import OrderCreateForm
 from orders.models import OrderItem
 
+from .tasks import order_created
 
 def order_create(request):
     cart = Cart(request)
@@ -49,4 +50,6 @@ class OrderCreateView(FormView):
             )
 
         cart.clear()
+        # launch asynchronous task
+        order_created.delay(order.id)
         return render(self.request, 'orders/created.html', {'order':order})
