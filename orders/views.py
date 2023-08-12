@@ -30,7 +30,7 @@ def order_create(request):
 
 class OrderCreateView(FormView):
     form_class = OrderCreateForm
-    template_name = 'orders/order/create.html'
+    template_name = 'orders/create.html'
 
     def get(self, request, *args, **kwargs):
         cart = Cart(request)
