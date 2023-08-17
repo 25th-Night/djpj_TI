@@ -10,7 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
-import json
 import os
 
 from pathlib import Path
@@ -36,9 +35,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
 # SECRET_KEY
-SECRET_DIR = BASE_DIR / ".secrets"
-secrets = json.load(open(os.path.join(SECRET_DIR, "secret.json")))
-SECRET_KEY = secrets["DJANGO_SECRET_KEY"]
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
 # TEMPLATE 경로
 TEMPLATE_DIR = BASE_DIR / "templates"
@@ -191,11 +188,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # email settings
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'   # 메일을 발송하지 않고 콘솔 창에 출력
-EMAIL_HOST = secrets["GMAIL"]["default"]["EMAIL_HOST"]
+EMAIL_HOST = os.getenv("EMAIL_HOST")
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = secrets["GMAIL"]["default"]["EMAIL_HOST_USER"]
-EMAIL_HOST_PASSWORD = secrets["GMAIL"]["default"]["EMAIL_HOST_PASSWORD"]
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 
 
 # login settings
@@ -222,14 +219,14 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 # 페이스북 인증
-SOCIAL_AUTH_FACEBOOK_KEY = secrets["SOCIAL_AUTH_FACEBOOK_KEY"]
-SOCIAL_AUTH_FACEBOOK_SECRET = secrets["SOCIAL_AUTH_FACEBOOK_SECRET"]
+SOCIAL_AUTH_FACEBOOK_KEY = os.getenv("SOCIAL_AUTH_FACEBOOK_KEY")
+SOCIAL_AUTH_FACEBOOK_SECRET = os.getenv("SOCIAL_AUTH_FACEBOOK_SECRET")
 
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 
 # 구글 인증
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = secrets["SOCIAL_AUTH_GOOGLE_OAUTH2_KEY"]
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = secrets["SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET"]
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv("SOCIAL_AUTH_GOOGLE_OAUTH2_KEY")
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv("SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET")
 
 # 소셜 인증 파이프라인 추가
 SOCIAL_AUTH_PIPELINE = [
