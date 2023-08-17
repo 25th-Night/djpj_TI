@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.urls import reverse
+from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, FormView
 
 from cart.cart import Cart
@@ -19,9 +20,14 @@ def order_create(request):
                                          product=item['product'],
                                          price=item['price'],
                                          quantity=item['quantity'])
+            # clear the cart
             cart.clear()
-            return render(request, 'orders/order/created.html',
-                          {'order': order})
+            # launch asynchronous task
+            order_created.delay(order.id)
+            # set the order in the session
+            request.session['order_id'] = order.id
+            # redirect for payment
+            return redirect(reverse('payment:process'))
     else:
         form = OrderCreateForm()
     return render(request,
@@ -36,7 +42,7 @@ class OrderCreateView(FormView):
     def get(self, request, *args, **kwargs):
         cart = Cart(request)
         form = self.get_form()
-        return self.render_to_response({'cart': cart, 'form': form})
+        return render(request, self.template_name, {'cart': cart, 'form': form})
 
     def form_valid(self, form):
         cart = Cart(self.request)
@@ -49,7 +55,11 @@ class OrderCreateView(FormView):
                 quantity=item['quantity']
             )
 
+        # clear the cart
         cart.clear()
         # launch asynchronous task
         order_created.delay(order.id)
-        return render(self.request, 'orders/created.html', {'order':order})
+        # set the order in the session
+        self.request.session['order_id'] = order.id
+        # redirect for payment
+        return redirect(reverse('payment:process'))
