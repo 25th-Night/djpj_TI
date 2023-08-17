@@ -56,7 +56,7 @@ class PaymentProcessView(View):
     def get_order_from_session(request):
         order_id = request.session.get('order_id', None)
         order = get_object_or_404(Order, id=order_id)
-        return order_id
+        return order_id, order
 
     def get(self, request, *args, **kwargs):
         order_id, order = self.get_order_from_session(request)
