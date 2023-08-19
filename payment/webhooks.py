@@ -16,10 +16,10 @@ def stripe_webhook(request):
     event = None
     try:
         event = stripe.Webhook.construct_event(
-                    payload,
-                    sig_header,
-                    settings.STRIPE_WEBHOOK_SECRET
-                )
+            payload,
+            sig_header,
+            settings.STRIPE_WEBHOOK_SECRET
+        )
         print(f"event: {event}")
         print(f"str(event): {str(event)}")
     except ValueError as e:
@@ -40,6 +40,4 @@ def stripe_webhook(request):
             # store Stripe payment ID
             order.stripe_id = session.payment_intent
             order.save()
-            # launch asynchronous task
-            payment_completed.delay(order.id)
     return HttpResponse(status=200)
