@@ -5,4 +5,5 @@ app_name = 'orders'
 
 urlpatterns = [
     path('create/', views.OrderCreateView.as_view(), name='order_create'),
+    path('admin/order/<int:order_id>/', views.admin_order_detail, name='admin_order_detail'),
 ]
