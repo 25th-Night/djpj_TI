@@ -16,3 +16,4 @@ celery>=5.3.1
 gevent>=23.7.0
 flower>=2.0.0
 stripe>=6.0.0
+weasyprint>=59.0
