@@ -32,7 +32,7 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # STATIC 경로
-STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = BASE_DIR / 'static'
 
 # SECRET_KEY
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
