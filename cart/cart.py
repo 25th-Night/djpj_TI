@@ -68,7 +68,10 @@ class Cart:
 
     def clear(self):
         del self.session[settings.CART_SESSION_ID]
-        del self.session['coupon_id']
+        try:
+            del self.session['coupon_id']
+        except:
+            pass
         self.save()
 
     @property
