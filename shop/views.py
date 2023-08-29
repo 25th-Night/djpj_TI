@@ -61,8 +61,11 @@ class ProductDetailView(TemplateView):
         slug = self.kwargs["slug"]
         product = get_object_or_404(Product, id=id, slug=slug, available=True)
         cart_product_form = CartAddProductForm()
+        r = Recommender()
+        recommended_products = r.suggest_products_for([product], 4)
 
         context["product"] = product
         context["cart_product_form"] = cart_product_form
+        context["recommended_products"] = recommended_products
 
         return context
