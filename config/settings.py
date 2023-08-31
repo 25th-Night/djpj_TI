@@ -82,6 +82,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'easy_thumbnails',
     'debug_toolbar',
+    'rosetta',
 
     # Custom Apps,
     'blog.apps.BlogConfig',
