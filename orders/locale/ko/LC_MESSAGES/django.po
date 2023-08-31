@@ -19,24 +19,24 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 #: .\orders\models.py:12
 msgid "first name"
-msgstr ""
+msgstr "이름"
 
 #: .\orders\models.py:13
 msgid "last name"
-msgstr ""
+msgstr "성"
 
 #: .\orders\models.py:14
 msgid "e-mail"
-msgstr ""
+msgstr "이메일"
 
 #: .\orders\models.py:15
 msgid "address"
-msgstr ""
+msgstr "주소"
 
 #: .\orders\models.py:16
 msgid "postal code"
-msgstr ""
+msgstr "우편 번호"
 
 #: .\orders\models.py:17
 msgid "city"
-msgstr ""
+msgstr "도시"
