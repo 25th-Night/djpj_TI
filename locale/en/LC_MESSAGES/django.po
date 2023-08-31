@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-31 23:40+0900\n"
+"POT-Creation-Date: 2023-09-01 00:11+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,16 +22,44 @@ msgstr ""
 msgid "Quantity"
 msgstr ""
 
-#: .\config\settings.py:179
+#: .\config\settings.py:180
 msgid "English"
 msgstr ""
 
-#: .\config\settings.py:180
+#: .\config\settings.py:181
 msgid "Korean"
+msgstr ""
+
+#: .\config\urls.py:39
+msgid "cart/"
+msgstr ""
+
+#: .\config\urls.py:40
+msgid "orders/"
+msgstr ""
+
+#: .\config\urls.py:41
+msgid "payment/"
+msgstr ""
+
+#: .\config\urls.py:42
+msgid "coupons/"
 msgstr ""
 
 #: .\coupons\forms.py:6
 msgid "Coupon"
+msgstr ""
+
+#: .\payment\urls.py:10
+msgid "process/"
+msgstr ""
+
+#: .\payment\urls.py:11
+msgid "completed/"
+msgstr ""
+
+#: .\payment\urls.py:12
+msgid "canceled/"
 msgstr ""
 
 #: .\templates\orders\create.html:5 .\templates\orders\create.html:9

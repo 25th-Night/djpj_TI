@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-31 23:40+0900\n"
+"POT-Creation-Date: 2023-09-01 00:11+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,17 +22,47 @@ msgstr ""
 msgid "Quantity"
 msgstr "수량"
 
-#: .\config\settings.py:179
+#: .\config\settings.py:180
 msgid "English"
 msgstr "영어"
 
-#: .\config\settings.py:180
+#: .\config\settings.py:181
 msgid "Korean"
 msgstr "한국어"
+
+#: .\config\urls.py:39
+msgid "cart/"
+msgstr "장바구니/"
+
+#: .\config\urls.py:40
+msgid "orders/"
+msgstr "주문/"
+
+#: .\config\urls.py:41
+msgid "payment/"
+msgstr "결제/"
+
+#: .\config\urls.py:42
+#, fuzzy
+#| msgid "Coupon"
+msgid "coupons/"
+msgstr "쿠폰/"
 
 #: .\coupons\forms.py:6
 msgid "Coupon"
 msgstr "쿠폰"
+
+#: .\payment\urls.py:10
+msgid "process/"
+msgstr "진행/"
+
+#: .\payment\urls.py:11
+msgid "completed/"
+msgstr "완료/"
+
+#: .\payment\urls.py:12
+msgid "canceled/"
+msgstr "취소/"
 
 #: .\templates\orders\create.html:5 .\templates\orders\create.html:9
 msgid "Checkout"
