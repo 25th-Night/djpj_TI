@@ -43,7 +43,7 @@ class Migration(migrations.Migration):
                 "managed": True,
                 "default_permissions": (),
             },
-            bases=(parler.models.TranslatedFieldsModelMixin, models.Model),
+            bases=(parler.models.TranslatableModel, models.Model),
         ),
         migrations.CreateModel(
             name="ProductTranslation",
@@ -74,7 +74,7 @@ class Migration(migrations.Migration):
                 "managed": True,
                 "default_permissions": (),
             },
-            bases=(parler.models.TranslatedFieldsModelMixin, models.Model),
+            bases=(parler.models.TranslatableModel, models.Model),
         ),
         migrations.AlterModelOptions(
             name="category",
