@@ -49,7 +49,16 @@ TEMPLATE_DIR = BASE_DIR / "templates"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['mysite.com', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = [
+    'mysite.com',
+    '127.0.0.1',
+    'localhost',
+    os.getenv("NGROK_URL")
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    f'https://{os.getenv("NGROK_URL")}'
+]
 
 # Debug_Toolbr
 INTERNAL_IPS = [
