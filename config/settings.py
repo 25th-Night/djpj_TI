@@ -84,6 +84,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'rosetta',
     'parler',
+    'localflavor',
 
     # Custom Apps,
     'blog.apps.BlogConfig',

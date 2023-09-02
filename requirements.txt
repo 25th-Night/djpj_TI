@@ -19,3 +19,4 @@ stripe>=6.0.0
 weasyprint>=59.0
 django-rosetta>=0.9.9
 django-parler>=2.3
+django-localflavor>=4.0
