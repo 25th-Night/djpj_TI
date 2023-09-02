@@ -26,7 +26,7 @@
         <div class="dropdown z-3 position-absolute">
             {% for language in languages %}
                 {% if language.code == LANGUAGE_CODE %}
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                    <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
                         {{ language.name_local }}
                     </button>
@@ -45,7 +45,7 @@
         </div>
     </div>
 </div>
-<div id="subheader" class="mt-2">
+<div id="subheader">
     <div class="cart">
         {% with total_items=cart|length %}
             {% if total_items > 0 %}
