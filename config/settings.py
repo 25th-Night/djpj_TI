@@ -234,10 +234,11 @@ PASSWORD_HASHERS = [
 
 
 AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',
     'account.authentication.EmailAuthBackend',
     'social_core.backends.facebook.FacebookOAuth2',
     'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.naver.NaverOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
 ]
 
 # 페이스북 인증
@@ -249,6 +250,16 @@ SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 # 구글 인증
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv("SOCIAL_AUTH_GOOGLE_OAUTH2_KEY")
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv("SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET")
+
+# 네이버 소셜 로그인 설정
+SOCIAL_AUTH_NAVER_KEY = os.getenv("SOCIAL_AUTH_NAVER_KEY")
+SOCIAL_AUTH_NAVER_SECRET = os.getenv("SOCIAL_AUTH_NAVER_SECRET")
+
+# 네이버 소셜 로그인 데이터 범위
+SOCIAL_AUTH_NAVER_EXTRA_DATA = ['profile_image']
+
+# 소셜 로그인 JSON Field 추가 ( Postgres 경우 )
+SOCIAL_AUTH_JSONFIELD_ENABLED = True
 
 # 소셜 인증 파이프라인 추가
 SOCIAL_AUTH_PIPELINE = [
