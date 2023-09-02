@@ -35,7 +35,6 @@ urlpatterns = i18n_patterns(
     path('account/', include('account.urls')),
     path('blog/', include('blog.urls')),
     path('images/', include('images.urls', namespace='images')),
-    path('social-auth/', include('social_django.urls', namespace='social')),
     path(_('cart/'), include('cart.urls', namespace='cart')),
     path(_('orders/'), include('orders.urls', namespace='orders')),
     path(_('payment/'), include('payment.urls', namespace='payment')),
@@ -49,6 +48,7 @@ urlpatterns = i18n_patterns(
 
 urlpatterns += [
     path('payment/webhook/', webhooks.stripe_webhook, name='stripe-webhook'),
+    path('social-auth/', include('social_django.urls', namespace='social')),
 ]
 
 if settings.DEBUG:
